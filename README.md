@@ -2,7 +2,7 @@
 
 Simple single-oscillator synth based on the Roland TB-303.
 
-This is a DPF'ied build of [https://github.com/gordonjcp/nekobee "Nekobee"], allowing LV2 and VST builds of the plugin,
+This is a DPF'ied build of [nekobee](https://github.com/gordonjcp/nekobee), allowing LV2 and VST builds of the plugin,<br/>
 plus a nicer UI with a simple cat animation. ;)
 
 ## Screenshot
