@@ -72,6 +72,10 @@ $(error X11 missing, cannot continue)
 endif
 endif
 
+ifneq ($(shell pkg-config --exists liblo && echo true),true)
+$(error liblo missing, cannot continue)
+endif
+
 # --------------------------------------------------------------
 # Set libs stuff
 
