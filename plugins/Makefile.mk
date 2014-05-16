@@ -19,7 +19,11 @@ BUILD_CXX_FLAGS += -I. -I../../dpf/distrho -I../../dpf/dgl
 # --------------------------------------------------------------
 # Enable all possible plugin types
 
+ifeq ($(LINUX),true)
 all: jack dssi lv2 vst
+else
+all: dssi lv2 vst
+endif
 
 # --------------------------------------------------------------
 # Set plugin binary file targets
