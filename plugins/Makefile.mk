@@ -19,16 +19,17 @@ BUILD_CXX_FLAGS += -I. -I../../dpf/distrho -I../../dpf/dgl
 # --------------------------------------------------------------
 # Enable all possible plugin types
 
-all: dssi lv2 vst
+all: jack dssi lv2 vst
 
 # --------------------------------------------------------------
 # Set plugin binary file targets
 
-dssi_dsp   = $(TARGET_DIR)/$(NAME)-dssi.$(EXT)
-dssi_ui    = $(TARGET_DIR)/$(NAME)-dssi/$(NAME)_ui
-lv2_dsp    = $(TARGET_DIR)/$(NAME).lv2/$(NAME).$(EXT)
-lv2_ui     = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_ui.$(EXT)
-vst        = $(TARGET_DIR)/$(NAME)-vst.$(EXT)
+jack     = $(TARGET_DIR)/$(NAME)
+dssi_dsp = $(TARGET_DIR)/$(NAME)-dssi.$(EXT)
+dssi_ui  = $(TARGET_DIR)/$(NAME)-dssi/$(NAME)_ui
+lv2_dsp  = $(TARGET_DIR)/$(NAME).lv2/$(NAME).$(EXT)
+lv2_ui   = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_ui.$(EXT)
+vst      = $(TARGET_DIR)/$(NAME)-vst.$(EXT)
 
 ifeq ($(WIN32),true)
 dssi_ui += .exe
@@ -54,6 +55,15 @@ DISTRHO_UI_FILES     = ../../dpf/distrho/DistrhoUIMain.cpp ../../dpf/libdgl.a
 clean:
 	rm -f *.o
 	rm -rf $(TARGET_DIR)/$(NAME)-* $(TARGET_DIR)/$(NAME).lv2/
+
+# --------------------------------------------------------------
+# JACK
+
+jack: $(jack)
+
+$(jack): $(OBJS_DSP) $(OBJS_UI) $(DISTRHO_PLUGIN_FILES) $(DISTRHO_UI_FILES)
+	mkdir -p $(shell dirname $@)
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) $(shell pkg-config --libs jack) -lpthread -DDISTRHO_PLUGIN_TARGET_JACK -o $@
 
 # --------------------------------------------------------------
 # DSSI
