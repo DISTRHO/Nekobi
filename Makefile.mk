@@ -63,6 +63,9 @@ endif
 # Check for required libs
 
 ifeq ($(LINUX),true)
+ifneq ($(shell pkg-config --exists jack && echo true),true)
+$(error JACK missing, cannot continue)
+endif
 ifneq ($(shell pkg-config --exists gl && echo true),true)
 $(error OpenGL missing, cannot continue)
 endif
