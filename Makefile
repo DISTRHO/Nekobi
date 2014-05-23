@@ -12,7 +12,7 @@ libs:
 	$(MAKE) -C dpf/dgl
 
 plugins: libs
-	$(MAKE) -C plugins/Nekobi
+	$(MAKE) all -C plugins/Nekobi
 
 gen: plugins dpf/utils/lv2_ttl_generator
 	@$(CURDIR)/dpf/utils/generate-ttl.sh
@@ -29,4 +29,4 @@ clean:
 
 # --------------------------------------------------------------
 
-.PHONY: libs plugins
+.PHONY: plugins
