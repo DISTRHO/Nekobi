@@ -168,7 +168,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
     switch (index)
     {
     case paramWaveform:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE|PARAMETER_IS_BOOLEAN;
+        parameter.hints      = kParameterIsAutomable|kParameterIsBoolean;
         parameter.name       = "Waveform";
         parameter.symbol     = "waveform";
         parameter.ranges.def = 0.0f;
@@ -176,7 +176,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 1.0f;
         break;
     case paramTuning:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // was 0.5 <-> 2.0, log
+        parameter.hints      = kParameterIsAutomable; // was 0.5 <-> 2.0, log
         parameter.name       = "Tuning";
         parameter.symbol     = "tuning";
         parameter.ranges.def = 0.0f;
@@ -184,7 +184,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 12.0f;
         break;
     case paramCutoff:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // modified x2.5
+        parameter.hints      = kParameterIsAutomable; // modified x2.5
         parameter.name       = "Cutoff";
         parameter.symbol     = "cutoff";
         parameter.unit       = "%";
@@ -193,7 +193,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 100.0f;
         break;
     case paramResonance:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // modified x100
+        parameter.hints      = kParameterIsAutomable; // modified x100
         parameter.name       = "VCF Resonance";
         parameter.symbol     = "resonance";
         parameter.unit       = "%";
@@ -202,7 +202,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 95.0f;
         break;
     case paramEnvMod:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // modified x100
+        parameter.hints      = kParameterIsAutomable; // modified x100
         parameter.name       = "Env Mod";
         parameter.symbol     = "env_mod";
         parameter.unit       = "%";
@@ -211,7 +211,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 100.0f;
         break;
     case paramDecay:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // was 0.000009 <-> 0.0005, log
+        parameter.hints      = kParameterIsAutomable; // was 0.000009 <-> 0.0005, log
         parameter.name       = "Decay";
         parameter.symbol     = "decay";
         parameter.unit       = "%";
@@ -220,7 +220,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 100.0f;
         break;
     case paramAccent:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // modified x100
+        parameter.hints      = kParameterIsAutomable; // modified x100
         parameter.name       = "Accent";
         parameter.symbol     = "accent";
         parameter.unit       = "%";
@@ -229,7 +229,7 @@ void DistrhoPluginNekobi::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.ranges.max = 100.0f;
         break;
     case paramVolume:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE; // modified x100
+        parameter.hints      = kParameterIsAutomable; // modified x100
         parameter.name       = "Volume";
         parameter.symbol     = "volume";
         parameter.unit       = "%";
@@ -355,7 +355,10 @@ void DistrhoPluginNekobi::d_run(const float**, float** outputs, uint32_t frames,
         /* process any ready events */
         while (curEventIndex < midiEventCount && framesDone == midiEvents[curEventIndex].frame)
         {
-            nekobee_handle_raw_event(&fSynth, midiEvents[curEventIndex].size, midiEvents[curEventIndex].buf);
+            if (midiEvents[curEventIndex].size > MidiEvent::kDataSize)
+                continue;
+
+            nekobee_handle_raw_event(&fSynth, midiEvents[curEventIndex].size, midiEvents[curEventIndex].data);
             curEventIndex++;
         }
 

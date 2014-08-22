@@ -47,19 +47,6 @@ public:
 
 protected:
     // -------------------------------------------------------------------
-    // Information
-
-    uint d_getWidth() const noexcept override
-    {
-        return DistrhoArtworkNekobi::backgroundWidth;
-    }
-
-    uint d_getHeight() const noexcept override
-    {
-        return DistrhoArtworkNekobi::backgroundHeight;
-    }
-
-    // -------------------------------------------------------------------
     // DSP Callbacks
 
     void d_parameterChanged(uint32_t index, float value) override;

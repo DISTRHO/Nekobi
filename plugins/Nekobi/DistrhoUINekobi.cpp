@@ -29,6 +29,9 @@ DistrhoUINekobi::DistrhoUINekobi()
     // FIXME
     fNeko.setTimerSpeed(5);
 
+    // set UI size
+    setSize(DistrhoArtworkNekobi::backgroundWidth, DistrhoArtworkNekobi::backgroundHeight);
+
     // background
     fImgBackground = Image(DistrhoArtworkNekobi::backgroundData, DistrhoArtworkNekobi::backgroundWidth, DistrhoArtworkNekobi::backgroundHeight, GL_BGR);
 
