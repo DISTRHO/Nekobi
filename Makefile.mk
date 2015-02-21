@@ -75,26 +75,26 @@ LINK_FLAGS      = $(LINK_OPTS) $(LDFLAGS)
 endif
 
 # --------------------------------------------------------------
-# Check for required libs
+# Check for optional libs
 
 ifeq ($(LINUX),true)
-ifneq ($(shell pkg-config --exists jack && echo true),true)
-$(error JACK missing, cannot continue)
-endif
-ifneq ($(shell pkg-config --exists gl && echo true),true)
-$(error OpenGL missing, cannot continue)
-endif
-ifneq ($(shell pkg-config --exists x11 && echo true),true)
-$(error X11 missing, cannot continue)
-endif
+# HAVE_DGL   = $(shell pkg-config --exists gl x11 && echo true)
+HAVE_JACK  = $(shell pkg-config --exists jack   && echo true)
+HAVE_LIBLO = $(shell pkg-config --exists liblo  && echo true)
 endif
 
-ifneq ($(shell pkg-config --exists liblo && echo true),true)
-$(error liblo missing, cannot continue)
+ifeq ($(MACOS),true)
+HAVE_DGL = true
+endif
+
+ifeq ($(WIN32),true)
+HAVE_DGL = true
 endif
 
 # --------------------------------------------------------------
 # Set libs stuff
+
+ifeq ($(HAVE_DGL),true)
 
 ifeq ($(LINUX),true)
 DGL_FLAGS = $(shell pkg-config --cflags gl x11)
@@ -108,6 +108,8 @@ endif
 ifeq ($(WIN32),true)
 DGL_LIBS  = -lopengl32 -lgdi32
 endif
+
+endif # HAVE_DGL
 
 # --------------------------------------------------------------
 # Set extension

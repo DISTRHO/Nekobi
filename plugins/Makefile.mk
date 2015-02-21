@@ -16,6 +16,18 @@ TARGET_DIR = ../../bin
 BUILD_C_FLAGS   += -I.
 BUILD_CXX_FLAGS += -I. -I../../dpf/distrho -I../../dpf/dgl
 
+ifeq ($(HAVE_DGL),true)
+BASE_FLAGS += -DHAVE_DGL
+endif
+
+ifeq ($(HAVE_JACK),true)
+BASE_FLAGS += -DHAVE_JACK
+endif
+
+ifeq ($(HAVE_LIBLO),true)
+BASE_FLAGS += -DHAVE_LIBLO
+endif
+
 # --------------------------------------------------------------
 # Set plugin binary file targets
 
@@ -28,17 +40,16 @@ lv2_dsp    = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_dsp.$(EXT)
 lv2_ui     = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_ui.$(EXT)
 vst        = $(TARGET_DIR)/$(NAME)-vst.$(EXT)
 
-ifeq ($(WIN32),true)
-dssi_ui += .exe
-endif
-
-# TODO: MacOS VST bundle
-
 # --------------------------------------------------------------
 # Set distrho code files
 
 DISTRHO_PLUGIN_FILES = ../../dpf/distrho/DistrhoPluginMain.cpp
+
+ifeq ($(HAVE_DGL),true)
 DISTRHO_UI_FILES     = ../../dpf/distrho/DistrhoUIMain.cpp ../../dpf/libdgl.a
+else
+TARGET_NOUI          = true
+endif
 
 # --------------------------------------------------------------
 # Handle plugins without UI
@@ -90,7 +101,9 @@ $(ladspa_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 # --------------------------------------------------------------
 # DSSI
 
-dssi: $(dssi_dsp) $(dssi_ui)
+dssi:     $(dssi_dsp) $(dssi_ui)
+dssi_dsp: $(dssi_dsp)
+dssi_ui:  $(dssi_ui)
 
 $(dssi_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 	mkdir -p $(shell dirname $@)
@@ -104,6 +117,7 @@ $(dssi_ui): $(OBJS_UI) $(DISTRHO_UI_FILES)
 # LV2
 
 lv2_one: $(lv2)
+lv2_dsp: $(lv2_dsp)
 lv2_sep: $(lv2_dsp) $(lv2_ui)
 
 $(lv2): $(OBJS_DSP) $(OBJS_UI) $(DISTRHO_PLUGIN_FILES) $(DISTRHO_UI_FILES)
