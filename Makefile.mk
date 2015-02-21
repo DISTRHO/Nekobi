@@ -78,7 +78,7 @@ endif
 # Check for optional libs
 
 ifeq ($(LINUX),true)
-# HAVE_DGL   = $(shell pkg-config --exists gl x11 && echo true)
+HAVE_DGL   = $(shell pkg-config --exists gl x11 && echo true)
 HAVE_JACK  = $(shell pkg-config --exists jack   && echo true)
 HAVE_LIBLO = $(shell pkg-config --exists liblo  && echo true)
 endif
