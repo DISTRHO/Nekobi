@@ -6,7 +6,7 @@
 
 include Makefile.mk
 
-all: libs plugins gen
+all: libs plugins modguis gen
 
 # --------------------------------------------------------------
 
@@ -17,6 +17,10 @@ endif
 
 plugins: libs
 	$(MAKE) all -C plugins/Nekobi
+
+modguis: plugins
+	cp -r modguis/Nekobi.modgui/modgui bin/Nekobi.lv2/
+	cp modguis/Nekobi.modgui/manifest.ttl bin/Nekobi.lv2/modgui.ttl
 
 gen: plugins dpf/utils/lv2_ttl_generator
 	@$(CURDIR)/dpf/utils/generate-ttl.sh
