@@ -81,6 +81,7 @@ endif
 # --------------------------------------------------------------
 # Set desired items to build
 BUILD_DSSI      = true
+BUILD_VST      = true
 
 # --------------------------------------------------------------
 # Check for optional libs

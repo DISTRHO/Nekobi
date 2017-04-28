@@ -50,7 +50,9 @@ else
 TARGETS += lv2_dsp
 endif
 
+ifeq ($(BUILD_VST),true)
 TARGETS += vst
+endif
 
 all: $(TARGETS)
 
