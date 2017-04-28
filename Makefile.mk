@@ -80,7 +80,8 @@ endif
 
 # --------------------------------------------------------------
 # Set desired items to build
-BUILD_DSSI      = true
+BUILD_DSSI     = true
+BUILD_LV2      = true
 BUILD_VST      = true
 
 # --------------------------------------------------------------

@@ -19,8 +19,10 @@ plugins: libs
 	$(MAKE) all -C plugins/Nekobi
 
 modguis: plugins
+ifeq ($(BUILD_LV2),true)
 	cp -r modguis/Nekobi.modgui/modgui bin/Nekobi.lv2/
 	cp modguis/Nekobi.modgui/manifest.ttl bin/Nekobi.lv2/modgui.ttl
+endif
 
 gen: plugins dpf/utils/lv2_ttl_generator
 	@$(CURDIR)/dpf/utils/generate-ttl.sh
