@@ -79,6 +79,10 @@ LINK_FLAGS      = $(LINK_OPTS) $(LDFLAGS)
 endif
 
 # --------------------------------------------------------------
+# Set desired items to build
+BUILD_DSSI      = true
+
+# --------------------------------------------------------------
 # Check for optional libs
 
 ifeq ($(LINUX),true)

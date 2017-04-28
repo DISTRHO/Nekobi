@@ -33,11 +33,13 @@ TARGETS += jack
 endif
 endif
 
+ifeq ($(BUILD_DSSI),true)
 ifeq ($(LINUX),true)
 TARGETS += dssi_dsp
 ifeq ($(HAVE_DGL),true)
 ifeq ($(HAVE_LIBLO),true)
 TARGETS += dssi_ui
+endif
 endif
 endif
 endif
