@@ -20,8 +20,10 @@ plugins: libs
 
 modguis: plugins
 ifeq ($(BUILD_LV2),true)
+ifeq ($(HAVE_DGL),true)
 	cp -r modguis/Nekobi.modgui/modgui bin/Nekobi.lv2/
 	cp modguis/Nekobi.modgui/manifest.ttl bin/Nekobi.lv2/modgui.ttl
+endif
 endif
 
 gen: plugins dpf/utils/lv2_ttl_generator
