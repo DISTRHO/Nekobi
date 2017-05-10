@@ -33,6 +33,7 @@ TARGETS += jack
 endif
 endif
 
+ifeq ($(BUILD_DSSI),true)
 ifeq ($(LINUX),true)
 TARGETS += dssi_dsp
 ifeq ($(HAVE_DGL),true)
@@ -41,14 +42,19 @@ TARGETS += dssi_ui
 endif
 endif
 endif
+endif
 
+ifeq ($(BUILD_LV2),true)
 ifeq ($(HAVE_DGL),true)
 TARGETS += lv2_sep
 else
 TARGETS += lv2_dsp
 endif
+endif
 
+ifeq ($(BUILD_VST),true)
 TARGETS += vst
+endif
 
 all: $(TARGETS)
 
