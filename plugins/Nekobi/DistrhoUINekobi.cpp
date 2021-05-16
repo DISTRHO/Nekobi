@@ -29,9 +29,6 @@ DistrhoUINekobi::DistrhoUINekobi()
       fImgBackground(Art::backgroundData, Art::backgroundWidth, Art::backgroundHeight, GL_BGR),
       fAboutWindow(this)
 {
-    // FIXME
-    fNeko.setTimerSpeed(5);
-
     // about
     Image aboutImage(Art::aboutData, Art::aboutWidth, Art::aboutHeight, GL_BGR);
     fAboutWindow.setImage(aboutImage);
@@ -127,6 +124,9 @@ DistrhoUINekobi::DistrhoUINekobi()
     fButtonAbout = new ImageButton(this, aboutImageNormal, aboutImageHover, aboutImageHover);
     fButtonAbout->setAbsolutePos(505, 5);
     fButtonAbout->setCallback(this);
+
+    // neko animation
+    addIdleCallback(this, 120);
 }
 
 // -----------------------------------------------------------------------
@@ -161,15 +161,6 @@ void DistrhoUINekobi::parameterChanged(uint32_t index, float value)
         fKnobVolume->setValue(value);
         break;
     }
-}
-
-// -----------------------------------------------------------------------
-// UI Callbacks
-
-void DistrhoUINekobi::uiIdle()
-{
-    if (fNeko.idle())
-        repaint();
 }
 
 // -----------------------------------------------------------------------
@@ -217,6 +208,15 @@ void DistrhoUINekobi::onDisplay()
 {
     fImgBackground.draw();
     fNeko.draw();
+}
+
+// -----------------------------------------------------------------------
+// Other Callbacks
+
+void DistrhoUINekobi::idleCallback()
+{
+    if (fNeko.idle())
+        repaint();
 }
 
 // -----------------------------------------------------------------------

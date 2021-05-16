@@ -35,7 +35,6 @@ public:
     NekoWidget()
         : fPos(0),
           fTimer(0),
-          fTimerSpeed(20),
           fCurAction(kActionNone),
           fCurImage(&fImages.sit)
     {
@@ -79,10 +78,7 @@ public:
     // returns true if needs repaint
     bool idle()
     {
-        if (++fTimer % fTimerSpeed != 0) // target is 20ms
-            return false;
-
-        if (fTimer == fTimerSpeed*9)
+        if (++fTimer == 10)
         {
             if (fCurAction == kActionNone)
                 fCurAction = static_cast<Action>(std::rand() % kActionCount);
@@ -158,12 +154,6 @@ public:
         return true;
     }
 
-    void setTimerSpeed(int speed)
-    {
-        fTimer = 0;
-        fTimerSpeed = speed;
-    }
-
     // -------------------------------------------------------------------
 
 private:
@@ -191,7 +181,6 @@ private:
 
     int fPos;
     int fTimer;
-    int fTimerSpeed;
 
     Action fCurAction;
     Image* fCurImage;
