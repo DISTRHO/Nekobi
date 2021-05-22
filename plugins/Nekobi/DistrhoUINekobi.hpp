@@ -1,6 +1,6 @@
 /*
  * DISTRHO Nekobi Plugin, based on Nekobee by Sean Bolton and others.
- * Copyright (C) 2013-2015 Filipe Coelho <falktx@falktx.com>
+ * Copyright (C) 2013-2021 Filipe Coelho <falktx@falktx.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -20,24 +20,29 @@
 
 #include "DistrhoUI.hpp"
 
-#include "ImageWidgets.hpp"
-
 #include "DistrhoArtworkNekobi.hpp"
 #include "NekoWidget.hpp"
+#include "ImageBaseWidgets.hpp"
 
-using DGL_NAMESPACE::ImageAboutWindow;
-using DGL_NAMESPACE::ImageButton;
-using DGL_NAMESPACE::ImageKnob;
-using DGL_NAMESPACE::ImageSlider;
+#ifdef DGL_CAIRO
+typedef DGL_NAMESPACE::CairoImage NekoImage;
+#else
+typedef DGL_NAMESPACE::OpenGLImage NekoImage;
+#endif
+
+typedef DGL_NAMESPACE::ImageBaseAboutWindow<NekoImage> NekoImageAboutWindow;
+typedef DGL_NAMESPACE::ImageBaseButton<NekoImage> NekoImageButton;
+typedef DGL_NAMESPACE::ImageBaseKnob<NekoImage> NekoImageKnob;
+typedef DGL_NAMESPACE::ImageBaseSlider<NekoImage> NekoImageSlider;
 
 START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------
 
 class DistrhoUINekobi : public UI,
-                        public ImageButton::Callback,
-                        public ImageKnob::Callback,
-                        public ImageSlider::Callback,
+                        public NekoImageButton::Callback,
+                        public NekoImageKnob::Callback,
+                        public NekoImageSlider::Callback,
                         public IdleCallback
 {
 public:
@@ -52,13 +57,13 @@ protected:
     // -------------------------------------------------------------------
     // Widget Callbacks
 
-    void imageButtonClicked(ImageButton* button, int) override;
-    void imageKnobDragStarted(ImageKnob* knob) override;
-    void imageKnobDragFinished(ImageKnob* knob) override;
-    void imageKnobValueChanged(ImageKnob* knob, float value) override;
-    void imageSliderDragStarted(ImageSlider* slider) override;
-    void imageSliderDragFinished(ImageSlider* slider) override;
-    void imageSliderValueChanged(ImageSlider* slider, float value) override;
+    void imageButtonClicked(NekoImageButton* button, int) override;
+    void imageKnobDragStarted(NekoImageKnob* knob) override;
+    void imageKnobDragFinished(NekoImageKnob* knob) override;
+    void imageKnobValueChanged(NekoImageKnob* knob, float value) override;
+    void imageSliderDragStarted(NekoImageSlider* slider) override;
+    void imageSliderDragFinished(NekoImageSlider* slider) override;
+    void imageSliderValueChanged(NekoImageSlider* slider, float value) override;
 
     void onDisplay() override;
 
@@ -68,14 +73,14 @@ protected:
     void idleCallback() override;
 
 private:
-    Image            fImgBackground;
-    ImageAboutWindow fAboutWindow;
-    NekoWidget       fNeko;
+    NekoImage            fImgBackground;
+    NekoImageAboutWindow fAboutWindow;
+    NekoWidget           fNeko;
 
-    ScopedPointer<ImageButton> fButtonAbout;
-    ScopedPointer<ImageSlider> fSliderWaveform;
-    ScopedPointer<ImageKnob> fKnobTuning, fKnobCutoff, fKnobResonance;
-    ScopedPointer<ImageKnob> fKnobEnvMod, fKnobDecay, fKnobAccent, fKnobVolume;
+    ScopedPointer<NekoImageButton> fButtonAbout;
+    ScopedPointer<NekoImageSlider> fSliderWaveform;
+    ScopedPointer<NekoImageKnob> fKnobTuning, fKnobCutoff, fKnobResonance;
+    ScopedPointer<NekoImageKnob> fKnobEnvMod, fKnobDecay, fKnobAccent, fKnobVolume;
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistrhoUINekobi)
 };
