@@ -1,6 +1,6 @@
 /*
  * DISTRHO Nekobi Plugin, based on Nekobee by Sean Bolton and others.
- * Copyright (C) 2013-2015 Filipe Coelho <falktx@falktx.com>
+ * Copyright (C) 2013-2021 Filipe Coelho <falktx@falktx.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -34,7 +34,7 @@ DistrhoUINekobi::DistrhoUINekobi()
     fAboutWindow.setImage(aboutImage);
 
     // slider
-    Image sliderImage(Art::sliderData, Art::sliderWidth, Art::sliderHeight);
+    Image sliderImage(Art::sliderData, Art::sliderWidth, Art::sliderHeight, kImageFormatBGRA);
 
     fSliderWaveform = new ImageSlider(this, sliderImage);
     fSliderWaveform->setId(DistrhoPluginNekobi::paramWaveform);
@@ -46,7 +46,7 @@ DistrhoUINekobi::DistrhoUINekobi()
     fSliderWaveform->setCallback(this);
 
     // knobs
-    Image knobImage(Art::knobData, Art::knobWidth, Art::knobHeight);
+    Image knobImage(Art::knobData, Art::knobWidth, Art::knobHeight, kImageFormatBGRA);
 
     // knob Tuning
     fKnobTuning = new ImageKnob(this, knobImage, ImageKnob::Vertical);
@@ -119,8 +119,8 @@ DistrhoUINekobi::DistrhoUINekobi()
     fKnobVolume->setCallback(this);
 
     // about button
-    Image aboutImageNormal(Art::aboutButtonNormalData, Art::aboutButtonNormalWidth, Art::aboutButtonNormalHeight);
-    Image aboutImageHover(Art::aboutButtonHoverData, Art::aboutButtonHoverWidth, Art::aboutButtonHoverHeight);
+    Image aboutImageNormal(Art::aboutButtonNormalData, Art::aboutButtonNormalWidth, Art::aboutButtonNormalHeight, kImageFormatBGRA);
+    Image aboutImageHover(Art::aboutButtonHoverData, Art::aboutButtonHoverWidth, Art::aboutButtonHoverHeight, kImageFormatBGRA);
     fButtonAbout = new ImageButton(this, aboutImageNormal, aboutImageHover, aboutImageHover);
     fButtonAbout->setAbsolutePos(505, 5);
     fButtonAbout->setCallback(this);

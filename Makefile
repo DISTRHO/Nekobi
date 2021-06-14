@@ -11,7 +11,7 @@ all: dgl plugins gen
 # --------------------------------------------------------------
 
 dgl:
-ifeq ($(HAVE_DGL),true)
+ifeq ($(HAVE_CAIRO_OR_OPENGL),true)
 	$(MAKE) -C dpf/dgl
 endif
 
