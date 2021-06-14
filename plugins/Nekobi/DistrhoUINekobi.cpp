@@ -26,11 +26,11 @@ namespace Art = DistrhoArtworkNekobi;
 
 DistrhoUINekobi::DistrhoUINekobi()
     : UI(Art::backgroundWidth, Art::backgroundHeight),
-      fImgBackground(Art::backgroundData, Art::backgroundWidth, Art::backgroundHeight, GL_BGR),
+      fImgBackground(Art::backgroundData, Art::backgroundWidth, Art::backgroundHeight, kImageFormatBGR),
       fAboutWindow(this)
 {
     // about
-    Image aboutImage(Art::aboutData, Art::aboutWidth, Art::aboutHeight, GL_BGR);
+    Image aboutImage(Art::aboutData, Art::aboutWidth, Art::aboutHeight, kImageFormatBGR);
     fAboutWindow.setImage(aboutImage);
 
     // slider
@@ -171,7 +171,7 @@ void DistrhoUINekobi::imageButtonClicked(ImageButton* button, int)
     if (button != fButtonAbout)
         return;
 
-    fAboutWindow.exec();
+    fAboutWindow.runAsModal();
 }
 
 void DistrhoUINekobi::imageKnobDragStarted(ImageKnob* knob)
@@ -206,8 +206,10 @@ void DistrhoUINekobi::imageSliderValueChanged(ImageSlider* slider, float value)
 
 void DistrhoUINekobi::onDisplay()
 {
-    fImgBackground.draw();
-    fNeko.draw();
+    const GraphicsContext& context(getGraphicsContext());
+
+    fImgBackground.draw(context);
+    fNeko.draw(context);
 }
 
 // -----------------------------------------------------------------------

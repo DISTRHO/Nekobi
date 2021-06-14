@@ -1,6 +1,6 @@
 /*
  * Neko widget animation
- * Copyright (C) 2013-2015 Filipe Coelho <falktx@falktx.com>
+ * Copyright (C) 2013-2021 Filipe Coelho <falktx@falktx.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,7 +21,6 @@
 #include "DistrhoArtworkNekobi.hpp"
 
 #include "Image.hpp"
-#include "Widget.hpp"
 
 #include <cstdlib> // rand
 
@@ -61,7 +60,7 @@ public:
         }
     }
 
-    void draw()
+    void draw(const GraphicsContext& context)
     {
         int x = fPos+108;
         int y = -2;
@@ -72,7 +71,7 @@ public:
             y += 12;
         }
 
-        fCurImage->drawAt(x, y);
+        fCurImage->drawAt(context, x, y);
     }
 
     // returns true if needs repaint
