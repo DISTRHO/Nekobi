@@ -1,6 +1,6 @@
 /*
  * Neko widget animation
- * Copyright (C) 2013-2021 Filipe Coelho <falktx@falktx.com>
+ * Copyright (C) 2013-2015 Filipe Coelho <falktx@falktx.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -20,15 +20,12 @@
 
 #include "DistrhoArtworkNekobi.hpp"
 
-#ifdef DGL_CAIRO
-#include "Cairo.hpp"
-typedef DGL_NAMESPACE::CairoImage NekoImage;
-#else
-#include "OpenGL.hpp"
-typedef DGL_NAMESPACE::OpenGLImage NekoImage;
-#endif
+#include "Image.hpp"
+#include "Widget.hpp"
 
 #include <cstdlib> // rand
+
+using DGL_NAMESPACE::Image;
 
 // -----------------------------------------------------------------------
 
@@ -64,7 +61,7 @@ public:
         }
     }
 
-    void draw(const GraphicsContext& context)
+    void draw()
     {
         int x = fPos+108;
         int y = -2;
@@ -75,7 +72,7 @@ public:
             y += 12;
         }
 
-        fCurImage->drawAt(context, x, y);
+        fCurImage->drawAt(x, y);
     }
 
     // returns true if needs repaint
@@ -170,23 +167,23 @@ private:
     };
 
     struct Images {
-        NekoImage sit;
-        NekoImage tail;
-        NekoImage claw1;
-        NekoImage claw2;
-        NekoImage scratch1;
-        NekoImage scratch2;
-        NekoImage run1;
-        NekoImage run2;
-        NekoImage run3;
-        NekoImage run4;
+        Image sit;
+        Image tail;
+        Image claw1;
+        Image claw2;
+        Image scratch1;
+        Image scratch2;
+        Image run1;
+        Image run2;
+        Image run3;
+        Image run4;
     } fImages;
 
     int fPos;
     int fTimer;
 
     Action fCurAction;
-    NekoImage* fCurImage;
+    Image* fCurImage;
 };
 
 // -----------------------------------------------------------------------
