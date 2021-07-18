@@ -113,6 +113,8 @@ jobs:
           bin/*
           !bin/*-ladspa.dylib
           !bin/*-dssi.dylib
+          !bin/lv2
+          !bin/vst2
 
   win32:
     runs-on: ubuntu-20.04
