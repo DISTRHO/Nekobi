@@ -12,8 +12,7 @@ env:
   BASE_FLAGS: -mtune=generic -msse -msse2
 
 jobs:
-  # linux x64
-  linux:
+  linux-x64:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -24,17 +23,16 @@ jobs:
         sudo apt-get install -yq libasound2-dev libpulse-dev liblo-dev libgl1-mesa-dev
     - name: Build Linux native
       env:
-        CFLAGS: ${BASE_FLAGS} -mfpmath=sse
-        CXXFLAGS: ${BASE_FLAGS} -mfpmath=sse
+        CFLAGS: $BASE_FLAGS -mfpmath=sse
+        CXXFLAGS: $BASE_FLAGS -mfpmath=sse
       run: |
         make NOOPT=true
     - uses: actions/upload-artifact@v2
       with:
-        name: linux x64 binaries
+        name: linux x64
         path: bin/*
 
-  # macOS universal
-  macos:
+  macos-universal:
     runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v2
@@ -53,7 +51,7 @@ jobs:
         make NOOPT=true
     - uses: actions/upload-artifact@v2
       with:
-        name: macOS universal binaries
+        name: macOS universal
         path: |
           bin/*
           !bin/*-dssi.dylib
