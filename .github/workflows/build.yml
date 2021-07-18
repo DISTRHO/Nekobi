@@ -19,13 +19,10 @@ jobs:
         submodules: recursive
     - name: Set up dependencies
       run: |
-        sudo apt-get install -yq libasound2-dev libpulse-dev liblo-dev libgl1-mesa-dev
-    - name: Build Linux native
-      env:
-        CFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
-        CXXFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
+        sudo apt-get install -yq libasound2-dev libgl1-mesa-dev liblo-dev libpulse-dev
+    - name: Build Linux x64
       run: |
-        make NOOPT=true
+        make
     - uses: actions/upload-artifact@v2
       with:
         name: linux x64
@@ -57,6 +54,31 @@ jobs:
           !bin/*-ladspa.dylib
           !bin/*-dssi.dylib
 
+  win32:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Set up dependencies
+      run: |
+        sudo apt-get install -yq binutils-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64 wine-stable
+    - name: Build win32 cross-compiled
+      env:
+        CC: i686-w64-mingw32-gcc
+        CXX: i686-w64-mingw32-g++
+        EXE_WRAPPER: wine
+        PKG_CONFIG: "false"
+      run: |
+        make
+    - uses: actions/upload-artifact@v2
+      with:
+        name: win32
+        path: |
+          bin/*
+          !bin/*-ladspa.dll
+          !bin/*-dssi.dll
+
   win64:
     runs-on: ubuntu-20.04
     steps:
@@ -65,20 +87,18 @@ jobs:
         submodules: recursive
     - name: Set up dependencies
       run: |
-        sudo apt-get install -yq binfmt-support binutils-mingw-w64-x86-64 g++-mingw-w64-x86-64 mingw-w64 wine-stable
+        sudo apt-get install -yq binutils-mingw-w64-x86-64 g++-mingw-w64-x86-64 mingw-w64 wine-stable
     - name: Build win64 cross-compiled
       env:
         CC: x86_64-w64-mingw32-gcc
         CXX: x86_64-w64-mingw32-g++
-        CFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
-        CXXFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
-        LDFLAGS: -static -static-libgcc -static-libstdc++
+        EXE_WRAPPER: wine
         PKG_CONFIG: "false"
       run: |
         make
     - uses: actions/upload-artifact@v2
       with:
-        name: macOS universal
+        name: win64
         path: |
           bin/*
           !bin/*-ladspa.dll
