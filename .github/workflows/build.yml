@@ -29,7 +29,8 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: linux x64
-        path: bin/*
+        path: |
+          bin/*
 
   macos-universal:
     runs-on: macos-10.15
@@ -53,6 +54,7 @@ jobs:
         name: macOS universal
         path: |
           bin/*
+          !bin/*-ladspa.dylib
           !bin/*-dssi.dylib
 
   win64:
@@ -63,7 +65,7 @@ jobs:
         submodules: recursive
     - name: Set up dependencies
       run: |
-        sudo apt-get install -yq mingw-w64 binfmt-support binutils-mingw-w64-x86-64 g++-mingw-w64-x86-64
+        sudo apt-get install -yq binfmt-support binutils-mingw-w64-x86-64 g++-mingw-w64-x86-64 mingw-w64 wine-stable
     - name: Build win64 cross-compiled
       env:
         CC: x86_64-w64-mingw32-gcc
@@ -79,4 +81,5 @@ jobs:
         name: macOS universal
         path: |
           bin/*
+          !bin/*-ladspa.dll
           !bin/*-dssi.dll
