@@ -20,6 +20,10 @@ jobs:
     - name: Set up dependencies
       run: |
         sudo dpkg --add-architecture arm64 && \
+        sudo sed -i "s/deb http/deb [arch=amd64] http/" /etc/apt/sources.list && \
+        echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports bionic main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/ports-arm64.list && \
+        echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports bionic-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-arm64.list && \
+        echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports bionic-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-arm64.list && \
         sudo apt-get update -qq && \
         sudo apt-get install -yq libasound2-dev:arm64 libgl1-mesa-dev:arm64 liblo-dev:arm64 libpulse-dev:arm64
     - name: Build linux arm64 cross-compiled
