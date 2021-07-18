@@ -62,13 +62,16 @@ jobs:
         submodules: recursive
     - name: Set up dependencies
       run: |
-        sudo apt-get install -yq binutils-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64 wine-stable
+        sudo dpkg --add-architecture i386 && \
+        sudo apt-get update -qq && \
+        sudo apt-get install -yq binutils-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64 wine-stable wine-stable-i386
     - name: Build win32 cross-compiled
       env:
         CC: i686-w64-mingw32-gcc
         CXX: i686-w64-mingw32-g++
         EXE_WRAPPER: wine
         PKG_CONFIG: "false"
+        WINEDEBUG: "-all"
       run: |
         make
     - uses: actions/upload-artifact@v2
@@ -94,6 +97,7 @@ jobs:
         CXX: x86_64-w64-mingw32-g++
         EXE_WRAPPER: wine
         PKG_CONFIG: "false"
+        WINEDEBUG: "-all"
       run: |
         make
     - uses: actions/upload-artifact@v2
