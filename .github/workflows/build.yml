@@ -103,11 +103,13 @@ jobs:
         CXXFLAGS: -arch x86_64 -arch arm64 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -mtune=generic -msse -msse2
         LDFLAGS: -arch x86_64 -arch arm64 -mmacosx-version-min=10.12
       run: |
-        make NOOPT=true -j $(sysctl -n hw.logicalcpu)
+        make NOOPT=true -j $(sysctl -n hw.logicalcpu) && \
+        cd dpf/utils && package-osx-bundles.sh
     - uses: actions/upload-artifact@v2
       with:
         name: macOS universal
         path: |
+          *-macOS.pkg
           bin/*
           !bin/*-ladspa.dylib
           !bin/*-dssi.dylib
