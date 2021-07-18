@@ -9,7 +9,6 @@ on:
       - '*'
 env:
   DEBIAN_FRONTEND: noninteractive
-  BASE_FLAGS: -mtune=generic -msse -msse2
 
 jobs:
   linux-x64:
@@ -23,8 +22,8 @@ jobs:
         sudo apt-get install -yq libasound2-dev libpulse-dev liblo-dev libgl1-mesa-dev
     - name: Build Linux native
       env:
-        CFLAGS: "${BASE_FLAGS} -mfpmath=sse"
-        CXXFLAGS: "${BASE_FLAGS} -mfpmath=sse"
+        CFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
+        CXXFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
       run: |
         make NOOPT=true
     - uses: actions/upload-artifact@v2
@@ -44,8 +43,8 @@ jobs:
         sudo xcode-select -s "/Applications/Xcode_12.3.app"
     - name: Build macOS
       env:
-        CFLAGS: "${BASE_FLAGS} -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64"
-        CXXFLAGS: "${BASE_FLAGS} -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64"
+        CFLAGS: -mtune=generic -msse -msse2 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
+        CXXFLAGS: -mtune=generic -msse -msse2 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
         LDFLAGS: -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
       run: |
         make NOOPT=true
@@ -69,8 +68,10 @@ jobs:
       env:
         CC: x86_64-w64-mingw32-gcc
         CXX: x86_64-w64-mingw32-g++
+        CFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
+        CXXFLAGS: -mtune=generic -msse -msse2 -mfpmath=sse
         LDFLAGS: -static -static-libgcc -static-libstdc++
-        PKG_CONFIG_PATH: /not-used-please-ignore
+        PKG_CONFIG: "false"
       run: |
         make
     - uses: actions/upload-artifact@v2
