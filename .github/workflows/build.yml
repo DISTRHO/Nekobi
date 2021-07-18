@@ -40,6 +40,10 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
+    - name: Fix up Xcode
+      run: |
+        sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*
+        sudo xcode-select -s "/Applications/Xcode_12.3.app"
     - name: Build macOS
       env:
         CFLAGS: ${BASE_FLAGS} -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
