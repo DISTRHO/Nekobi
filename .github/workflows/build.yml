@@ -44,7 +44,9 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: macOS binaries
-        path: bin/*
+        path: |
+          bin/*
+          !bin/*-dssi.dylib
 
   # linux with win64 cross-compilation
   #win64:
