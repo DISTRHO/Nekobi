@@ -1,0 +1,83 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+env:
+  DEBIAN_FRONTEND: noninteractive
+  HOMEBREW_NO_AUTO_UPDATE: 1
+
+jobs:
+  # linux native build
+  linux:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up cache
+      uses: actions/cache@v2
+    - name: Set up dependencies
+      run: |
+        sudo apt-get install -yq libasound2-dev libpulse-dev libgl1-mesa-dev
+    - name: Build Linux native
+      run: |
+        make
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux binaries
+        path: bin/*
+
+  # macOS native build
+  macos:
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up dependencies
+      run: |
+        brew install cmake jq meson
+    - name: Build macOS
+      shell: bash
+      run: |
+        make
+    - uses: actions/upload-artifact@v2
+      with:
+        name: macOS binaries
+        path: bin/*
+
+  # linux with win64 cross-compilation
+  #win64:
+    #runs-on: ubuntu-20.04
+    #steps:
+    #- uses: actions/checkout@v2
+    #- name: Set up cache
+      #uses: actions/cache@v2
+      #with:
+        #path: ~/apt-archives
+        #key: cache-win64
+    #- name: Restore debian packages cache
+      #run: |
+        #if [ -d ~/apt-archives ] && [ "$(ls ~/apt-archives | wc -l)" -ne 0 ]; then \
+          #sudo cp ~/apt-archives/*.deb /var/cache/apt/archives/; \
+        #fi
+    #- name: Set up dependencies
+      #run: |
+        #wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add - && \
+        #sudo dpkg --add-architecture i386 && \
+        #sudo apt-add-repository -y 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
+        #sudo apt-get update -qq && \
+        #sudo apt-get install -yq mingw-w64 binfmt-support binutils-mingw-w64-x86-64 g++-mingw-w64-x86-64 winehq-stable
+    #- name: Cache debian packages
+      #run: |
+        #mkdir -p ~/apt-archives && \
+        #sudo mv /var/cache/apt/archives/*.deb ~/apt-archives/
+    #- name: Build win64 cross-compiled
+      #shell: bash
+      #run: |
+        #make
+    #- uses: actions/upload-artifact@v2
+      #with:
+        #name: win64 installer
+        #path: setup/inno/PawPaw-*.exe
