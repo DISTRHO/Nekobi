@@ -25,7 +25,7 @@ jobs:
         echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports bionic-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-arm64.list && \
         echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports bionic-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-arm64.list && \
         sudo apt-get update -qq && \
-        sudo apt-get install -yq g++-aarch64-linux-gnu libasound2-dev:arm64 libgl1-mesa-dev:arm64 liblo-dev:arm64 libpulse-dev:arm64
+        sudo apt-get install -yq g++-aarch64-linux-gnu libasound2-dev:arm64 libcairo2-dev:arm64 libgl1-mesa-dev:arm64 liblo-dev:arm64 libpulse-dev:arm64 qemu-user-static
     - name: Build linux arm64 cross-compiled
       env:
         CC: aarch64-linux-gnu-gcc
@@ -53,7 +53,7 @@ jobs:
         echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-armhf.list && \
         echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/ports-armhf.list && \
         sudo apt-get update -qq && \
-        sudo apt-get install -yq g++-arm-linux-gnueabihf libasound2-dev:armhf libgl1-mesa-dev:armhf liblo-dev:armhf libpulse-dev:armhf
+        sudo apt-get install -yq g++-arm-linux-gnueabihf libasound2-dev:armhf libcairo2-dev:armhf libgl1-mesa-dev:armhf liblo-dev:armhf libpulse-dev:armhf qemu-user-static
     - name: Build linux armhf cross-compiled
       env:
         CC: arm-linux-gnueabihf-gcc
