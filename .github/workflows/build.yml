@@ -9,10 +9,10 @@ on:
       - '*'
 env:
   DEBIAN_FRONTEND: noninteractive
-  HOMEBREW_NO_AUTO_UPDATE: 1
+  BASE_FLAGS: -mtune=generic -msse -msse2
 
 jobs:
-  # linux native build
+  # linux x64
   linux:
     runs-on: ubuntu-18.04
     steps:
@@ -23,14 +23,17 @@ jobs:
       run: |
         sudo apt-get install -yq libasound2-dev libpulse-dev liblo-dev libgl1-mesa-dev
     - name: Build Linux native
+      env:
+        CFLAGS: ${BASE_FLAGS} -mfpmath=sse
+        CXXFLAGS: ${BASE_FLAGS} -mfpmath=sse
       run: |
-        make
+        make NOOPT=true
     - uses: actions/upload-artifact@v2
       with:
-        name: linux binaries
+        name: linux x64 binaries
         path: bin/*
 
-  # macOS native build
+  # macOS universal
   macos:
     runs-on: macos-10.15
     steps:
@@ -38,12 +41,15 @@ jobs:
       with:
         submodules: recursive
     - name: Build macOS
-      shell: bash
+      env:
+        CFLAGS: ${BASE_FLAGS} -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
+        CXXFLAGS: ${BASE_FLAGS} -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
+        LDFLAGS: -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
       run: |
-        make
+        make NOOPT=true
     - uses: actions/upload-artifact@v2
       with:
-        name: macOS binaries
+        name: macOS universal binaries
         path: |
           bin/*
           !bin/*-dssi.dylib
