@@ -32,7 +32,7 @@ jobs:
         CXX: aarch64-linux-gnu-g++
         LDFLAGS: -static-libgcc -static-libstdc++
       run: |
-        make
+        make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
         name: linux arm64
@@ -60,7 +60,7 @@ jobs:
         CXX: arm-linux-gnueabihf-g++
         LDFLAGS: -static-libgcc -static-libstdc++
       run: |
-        make
+        make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
         name: linux armhf
@@ -80,7 +80,7 @@ jobs:
       env:
         LDFLAGS: -static-libgcc -static-libstdc++
       run: |
-        make
+        make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
         name: linux x64
@@ -99,11 +99,11 @@ jobs:
         sudo xcode-select -s "/Applications/Xcode_12.3.app"
     - name: Build macOS universal
       env:
-        CFLAGS: -mtune=generic -msse -msse2 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
-        CXXFLAGS: -mtune=generic -msse -msse2 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
-        LDFLAGS: -mmacosx-version-min=10.12 -arch x86_64 -arch arm64
+        CFLAGS: -arch x86_64 -arch arm64 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -mtune=generic -msse -msse2
+        CXXFLAGS: -arch x86_64 -arch arm64 -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_10_12 -mmacosx-version-min=10.12 -mtune=generic -msse -msse2
+        LDFLAGS: -arch x86_64 -arch arm64 -mmacosx-version-min=10.12
       run: |
-        make NOOPT=true
+        make NOOPT=true -j $(sysctl -n hw.logicalcpu)
     - uses: actions/upload-artifact@v2
       with:
         name: macOS universal
@@ -131,7 +131,7 @@ jobs:
         PKG_CONFIG: "false"
         WINEDEBUG: "-all"
       run: |
-        make
+        make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
         name: win32
@@ -157,7 +157,7 @@ jobs:
         PKG_CONFIG: "false"
         WINEDEBUG: "-all"
       run: |
-        make
+        make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
         name: win64
