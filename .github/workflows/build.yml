@@ -104,7 +104,7 @@ jobs:
         LDFLAGS: -arch x86_64 -arch arm64 -mmacosx-version-min=10.12
       run: |
         make NOOPT=true -j $(sysctl -n hw.logicalcpu) && \
-        cd dpf/utils && package-osx-bundles.sh
+        ./dpf/utils/package-osx-bundles.sh
     - uses: actions/upload-artifact@v2
       with:
         name: macOS universal
