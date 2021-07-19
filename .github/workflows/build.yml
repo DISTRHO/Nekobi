@@ -35,7 +35,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: linux arm64
+        name: ${{ github.event.repository.name }}-linux-arm64
         path: |
           bin/*
 
@@ -63,7 +63,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: linux armhf
+        name: ${{ github.event.repository.name }}-linux-armhf
         path: |
           bin/*
 
@@ -83,7 +83,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: linux x64
+        name: ${{ github.event.repository.name }}-linux-x64
         path: |
           bin/*
 
@@ -107,7 +107,7 @@ jobs:
         ./dpf/utils/package-osx-bundles.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: macOS universal
+        name: ${{ github.event.repository.name }}-macOS-universal
         path: |
           *-macOS.pkg
           bin/*
@@ -138,7 +138,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: win32
+        name: ${{ github.event.repository.name }}-win32
         path: |
           bin/*
           !bin/*-ladspa.dll
@@ -164,7 +164,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: win64
+        name: ${{ github.event.repository.name }}-win64
         path: |
           bin/*
           !bin/*-ladspa.dll
