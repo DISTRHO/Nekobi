@@ -35,7 +35,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-linux-arm64
+        name: ${{ github.event.repository.name }}-linux-arm64-${{ github.event.pull_request.number || github.sha }}
         path: |
           bin/*
 
@@ -63,7 +63,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-linux-armhf
+        name: ${{ github.event.repository.name }}-linux-armhf-${{ github.event.pull_request.number || github.sha }}
         path: |
           bin/*
 
@@ -83,7 +83,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-linux-x64
+        name: ${{ github.event.repository.name }}-linux-x64-${{ github.event.pull_request.number || github.sha }}
         path: |
           bin/*
 
@@ -107,7 +107,7 @@ jobs:
         ./dpf/utils/package-osx-bundles.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-macOS-universal
+        name: ${{ github.event.repository.name }}-macOS-universal-${{ github.event.pull_request.number || github.sha }}
         path: |
           *-macOS.pkg
           bin/*
@@ -138,7 +138,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-win32
+        name: ${{ github.event.repository.name }}-win32-${{ github.event.pull_request.number || github.sha }}
         path: |
           bin/*
           !bin/*-ladspa.dll
@@ -164,7 +164,7 @@ jobs:
         make -j $(nproc)
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-win64
+        name: ${{ github.event.repository.name }}-win64-${{ github.event.pull_request.number || github.sha }}
         path: |
           bin/*
           !bin/*-ladspa.dll
