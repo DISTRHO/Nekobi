@@ -375,9 +375,6 @@ void DistrhoPluginNekobi::run(const float**, float** outputs, uint32_t frames, c
         /* process any ready events */
         while (curEventIndex < midiEventCount && framesDone == midiEvents[curEventIndex].frame)
         {
-            if (midiEvents[curEventIndex].size > MidiEvent::kDataSize)
-                continue;
-
             nekobee_handle_raw_event(&fSynth, midiEvents[curEventIndex].size, midiEvents[curEventIndex].data);
             curEventIndex++;
         }
