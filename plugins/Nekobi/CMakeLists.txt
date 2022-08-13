@@ -9,5 +9,4 @@ DPF_ADD_PLUGIN(Nekobi
 target_include_directories(Nekobi PUBLIC 
     "."
     "nekobee-src"
-    "artwork"
 )
