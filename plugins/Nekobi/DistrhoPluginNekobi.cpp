@@ -46,7 +46,7 @@ bool dssp_voicelist_mutex_trylock(nekobee_synth_t* const synth)
     return true;
 }
 
-bool dssp_voicelist_mutex_unlock(nekobee_synth_t* const synth)
+void dssp_voicelist_mutex_unlock(nekobee_synth_t* const synth)
 {
     synth->voicelist_mutex.unlock();
 }
