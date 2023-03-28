@@ -296,7 +296,7 @@ void DistrhoPluginNekobi::setParameterValue(uint32_t index, float value)
         break;
     case paramTuning:
         fParams.tuning = value;
-        fSynth.tuning = (value+12.0f)/24.0f * 1.5 + 0.5f; // FIXME: log?
+        fSynth.tuning = exp2f( value / 12.0f );
         DISTRHO_SAFE_ASSERT(fSynth.tuning >= 0.5f && fSynth.tuning <= 2.0f);
         break;
     case paramCutoff:
