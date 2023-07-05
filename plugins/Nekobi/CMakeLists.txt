@@ -1,12 +1,15 @@
-DPF_ADD_PLUGIN(Nekobi
-  TARGETS vst2
+dpf_add_plugin(Nekobi
+  TARGETS
+    clap dssi lv2 vst2 vst3
   FILES_DSP
-      DistrhoPluginNekobi.cpp
+    DistrhoPluginNekobi.cpp
   FILES_UI
-      DistrhoArtworkNekobi.cpp
-      DistrhoUINekobi.cpp)
+    DistrhoArtworkNekobi.cpp
+    DistrhoUINekobi.cpp
+)
 
-target_include_directories(Nekobi PUBLIC 
-    "."
-    "nekobee-src"
+target_include_directories(Nekobi
+  PUBLIC
+    .
+    nekobee-src
 )
