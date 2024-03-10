@@ -24,6 +24,7 @@ FILES_UI = \
 
 UI_TYPE = generic
 FILE_BROWSER_DISABLED = true
+SKIP_NATIVE_AUDIO_FALLBACK = true
 include ../../dpf/Makefile.plugins.mk
 
 # --------------------------------------------------------------
@@ -37,6 +38,6 @@ endif
 # --------------------------------------------------------------
 # Enable all possible plugin types
 
-all: jack dssi lv2_sep vst2 vst3 clap
+all: au clap dssi jack lv2_sep vst2 vst3
 
 # --------------------------------------------------------------

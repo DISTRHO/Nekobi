@@ -1,6 +1,6 @@
 dpf_add_plugin(Nekobi
   TARGETS
-    clap dssi lv2 vst2 vst3
+    au clap dssi lv2 vst2 vst3
   FILES_DSP
     DistrhoPluginNekobi.cpp
   FILES_UI
