@@ -12,7 +12,7 @@ all: dgl plugins gen
 
 dgl:
 ifeq ($(HAVE_CAIRO_OR_OPENGL),true)
-	$(MAKE) -C dpf/dgl FILE_BROWSER_DISABLED=true
+	$(MAKE) -C dpf/dgl USE_FILE_BROWSER=false
 endif
 
 plugins: dgl
