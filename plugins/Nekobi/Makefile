@@ -22,6 +22,8 @@ FILES_UI = \
 # --------------------------------------------------------------
 # Do some magic
 
+EXTRA_UI_LIBS = ./images.o
+
 UI_TYPE = generic
 SKIP_NATIVE_AUDIO_FALLBACK = true
 USE_FILE_BROWSER = false
