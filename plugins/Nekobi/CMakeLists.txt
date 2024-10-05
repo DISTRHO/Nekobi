@@ -13,3 +13,9 @@ target_include_directories(Nekobi
     .
     nekobee-src
 )
+
+find_package(Threads)
+target_link_libraries(Nekobi
+  PUBLIC
+    ${CMAKE_THREAD_LIBS_INIT}
+)

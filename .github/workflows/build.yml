@@ -21,6 +21,7 @@ jobs:
       - uses: distrho/dpf-cmake-action@v1
         with:
           target: ${{ matrix.target }}
+          suffix: -cmake
 
   linux-make:
     strategy:
@@ -47,6 +48,7 @@ jobs:
       - uses: distrho/dpf-cmake-action@v1
         with:
           target: ${{ matrix.target }}
+          suffix: -cmake
 
   macos-make:
     strategy:
@@ -74,6 +76,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           pawpaw: true
+          suffix: -cmake
 
   windows-make:
     strategy:
